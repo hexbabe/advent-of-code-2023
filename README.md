@@ -2,7 +2,7 @@
 
 I was eating my lunch when I noticed my coworker at Viam, Clint, sent a volunteer posting for Software Engineer @ The North Pole. Not thinking too much of it, I signed up. Little did I know, this was the start of an adventure straight out of a mad scientist's Christmas wish list.
 
-## Dec 1
+## December 1
 
 Trebuchet?! More like, "Tré-bu-what-have-I-gotten-myself-into"! The Elves, with their mysterious smiles, briefed me on a global snow production crisis. My mission? Restore snow operations by solving puzzles at fifty star-marked locations. Simple, right?
 

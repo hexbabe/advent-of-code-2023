@@ -108,10 +108,7 @@ def get_value_from_line_2(line):
             either_a_word_or_none = get_digit_word_in_string(acc)
             if either_a_word_or_none is not None:
                 word = either_a_word_or_none
-                # no increment on index due to possible overlap
-                # technically we could subtract word length
-                # but we know max overlap is one 
-                return DIGIT_WORD_TO_NUM[word], index
+                return DIGIT_WORD_TO_NUM[word], index  # no increment on index due to possible overlap
             index += 1
         return None, None
 
