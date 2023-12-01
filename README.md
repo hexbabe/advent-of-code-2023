@@ -1,12 +1,10 @@
-# advent-of-code-2023
-
-Dear Diary,
+# Dear Diary,
 
 I was eating my lunch when I noticed my coworker at Viam, Clint, sent a volunteer posting for Software Engineer @ The North Pole. Not thinking too much of it, I signed up. Little did I know, this was the start of an adventure straight out of a mad scientist's Christmas wish list.
 
 ## Dec 1
 
-Day 1: Trebuchet?! More like, "Tré-bu-what-have-I-gotten-myself-into"! The Elves, with their mysterious smiles, briefed me on a global snow production crisis. My mission? Restore snow operations by solving puzzles at fifty star-marked locations. Simple, right?
+Trebuchet?! More like, "Tré-bu-what-have-I-gotten-myself-into"! The Elves, with their mysterious smiles, briefed me on a global snow production crisis. My mission? Restore snow operations by solving puzzles at fifty star-marked locations. Simple, right?
 
 But wait, there's a twist! My mode of transport wasn't a comfy sleigh or a high-tech teleporter. Oh no, it was a medieval trebuchet! As I voiced my concerns (and my will), the Elves simply shushed me with "not powerful enough," "the sky," and "you sure ask a lot of questions." Before I could process the absurdity, I was being strapped into this ancient catapult. Talk about unconventional travel!
 
