@@ -50,18 +50,18 @@ red cubes, 13 green cubes, and 14 blue cubes. What is the sum of the IDs of thos
 from typing import List, Tuple
 
 
-MAX_RED_COUNT = 12
-MAX_GREEN_COUNT = 13
-MAX_BLUE_COUNT = 14
+MAX_REDS = 12
+MAX_GREENS = 13
+MAX_BLUES = 14
 
 
 ### Pre-processing (parsing input into objects; i looove objects)
 class Round:
-    def __init__(self, round_number: int, red_count = 0, green_count = 0, blue_count = 0):
+    def __init__(self, round_number: int, reds = 0, greens = 0, blues = 0):
         self.round_number = round_number
-        self.red_count = red_count
-        self.green_count = green_count
-        self.blue_count = blue_count
+        self.reds = reds
+        self.greens = greens
+        self.blues = blues
 
     def _get_only_numeric_from_str(self, s: str):
         acc = ""
@@ -73,16 +73,16 @@ class Round:
     def set_count(self, count_str: str):
         count = int(self._get_only_numeric_from_str(count_str))
         if "red" in count_str:
-            self.red_count = count
+            self.reds = count
         elif "green" in count_str:
-            self.green_count = count
+            self.greens = count
         elif "blue" in count_str:
-            self.blue_count = count
+            self.blues = count
         else:
             Exception("wtf input")
     
     def __repr__(self) -> str:
-        return f"\nRound {self.round_number}: Red: {self.red_count}, Green: {self.green_count}, Blue: {self.blue_count}"
+        return f"\nRound {self.round_number}: Red: {self.reds}, Green: {self.greens}, Blue: {self.blues}"
 
 
 class Game:
@@ -102,10 +102,10 @@ class Game:
             self.rounds.append(round)
 
     def get_min_number_cubes_needed(self) -> Tuple[int, int, int]:
-        red_counts = [round.red_count for round in self.rounds]
-        green_counts = [round.green_count for round in self.rounds]
-        blue_counts = [round.blue_count for round in self.rounds]
-        return max(red_counts), max(green_counts), max(blue_counts)
+        red_counts = [round.reds for round in self.rounds]
+        green_counts = [round.greens for round in self.rounds]
+        blue_counts = [round.blues for round in self.rounds]
+        return max(red_counts), max(green_counts), max(blue_counts)  # max calculates min needed
 
     def __repr__(self) -> str:
         return f"\nGame: {self.id} {self.rounds}"
@@ -117,23 +117,23 @@ def get_answer_part_1(games: List[Game]):
     for game in games:
         impossible = False
         for round in game.rounds:
-            impossible = impossible or round.red_count > MAX_RED_COUNT or round.green_count > MAX_GREEN_COUNT or round.blue_count > MAX_BLUE_COUNT
+            impossible = impossible or round.reds > MAX_REDS or round.greens > MAX_GREENS or round.blues > MAX_BLUES
         if not impossible:
             id_sum += game.id
 
-    print(f"The answer to part 1 is: {id_sum}")
+    print(f"Dec 2 part 1: {id_sum}")
     return id_sum
 
 def get_answer_part_2(games: List[Game]):
     powers_sum = 0
     for game in games:
-        min_red, min_green, min_blue = game.get_min_number_cubes_needed()
-        powers_sum += min_red * min_green * min_blue
-    print(f"The answer to part 2 is: {powers_sum}")
+        min_reds, min_greens, min_blues = game.get_min_number_cubes_needed()
+        powers_sum += min_reds * min_greens * min_blues
+    print(f"Dec 2 part 2: {powers_sum}. ez clap ggs")
     return powers_sum
 
 if __name__ == "__main__":
-    games_str_list = open('./dec_2/input.txt', 'r').readlines()
+    games_str_list = open('./dec_2/input.txt', 'r').readlines()  # run script from outer dir
     games = []
     for game_str in games_str_list:
         game = Game(game_str)

@@ -132,5 +132,5 @@ def get_answer(get_value_from_line):
     return values_sum
 
 if __name__ == "__main__":
-    print(get_answer(get_value_from_line_1))
-    print(get_answer(get_value_from_line_2))
+    print(f"Dec 1 part 1: {get_answer(get_value_from_line_1)}")
+    print(f"Dec 1 part 2: {get_answer(get_value_from_line_2)}. Stupid elf.")
