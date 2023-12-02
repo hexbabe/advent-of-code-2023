@@ -49,7 +49,7 @@ In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Addi
 What is the sum of all of the calibration values?
 """
 
-DIGITS_AS_LETTERS = {str(num) for num in range(1, 10)}  # input doesn't contain 0s
+DIGITS_AS_CHARS = {str(num) for num in range(1, 10)}  # input doesn't contain 0s
 DIGIT_WORD_TO_NUM = {
     "one": 1,
     "two": 2,
@@ -75,7 +75,7 @@ def get_value_from_line_1(line):
     """
     tens_digit, ones_digit = None, None
     for char in line:
-        if char in DIGITS_AS_LETTERS:
+        if char in DIGITS_AS_CHARS:
             if tens_digit is None:
                 tens_digit = int(char)
             ones_digit = int(char)
@@ -101,7 +101,7 @@ def get_value_from_line_2(line):
         while index < len(line):
             char = line[index]
             # Check if numeric digit letter came first
-            if char in DIGITS_AS_LETTERS:
+            if char in DIGITS_AS_CHARS:
                 return int(char), index + 1
             # Now check if acc has a word in it
             acc += char
