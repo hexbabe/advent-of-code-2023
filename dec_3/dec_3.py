@@ -166,11 +166,10 @@ if __name__ == "__main__":
     for row, line in enumerate(LINES):
         for col, char in enumerate(line):
             if is_engine_part(char):
-                # Part 1
                 nums = get_all_adjacent_nums(row, col)
                 for num, _ in nums:
                     total_sum += num
-                # Part 2
+            if char == "*":
                 gear_ratio = get_gear_ratio(row, col)
                 gear_ratios_sum += gear_ratio
 
