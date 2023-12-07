@@ -125,5 +125,5 @@ def get_answer_part_2(cards_str: List[str]):
 
 if __name__ == "__main__":
     print(f"Dec 4 part 1: {get_answer_part_1(CARDS)}")
-    print(f"Dec 4 part 2: {get_answer_part_2(CARDS)}")
+    print(f"Dec 4 part 2: {get_answer_part_2(CARDS)}!!!!!")
 
