@@ -157,123 +157,46 @@ type Hand struct {
 
 func NewHand(cards string, bid int, usingJokerRule bool) Hand {
 	hand := Hand{cards, bid, nil, -1}
-	hand.cardToCount = hand.getCardToCount(usingJokerRule)
-	hand.value = hand.GetValue()
+	hand.value = hand.GetValue(usingJokerRule)
 	return hand
 }
 
-// returns the new cardToCount based on where to allocate the joker
-func (hand Hand) applyJokerRule(usingJokerRule bool, cardToCount map[string]int) map[string]int {
+// returns the hand value based on where to allocate the joker
+func (hand Hand) getValueJokerRule(usingJokerRule bool, cardToCount map[string]int) int {
 	hand.cardToCount = cardToCount
-	if !usingJokerRule || cardToCount["J"] == 0 {
-		return cardToCount
+	if cardToCount["J"] == 0 {
+		return hand.GetValue(false)  // run normally if no Js
 	}
 
 	if hand.isFiveOfAKind() {
-		cardToCount["A"] = 5
-		delete(cardToCount, "J")
-		return cardToCount
+		return 7  // stays same as five of a kind
 	}
 	
 	if hand.isFourOfAKind() || hand.isFullHouse() {
-		var otherCard string
-		for card, _ := range cardToCount {
-			if card != "J" {
-				otherCard = card
-				break
-			}
-		}
-		cardToCount[otherCard] = 5
-		delete(cardToCount, "J")
-		return cardToCount
+		return 7  // becomes five of a kind
 	}
 
 	if hand.isThreeOfAKind() {
-		if cardToCount["J"] == 3 {  // J is triplet, so change to best non-three
-			bestCard := "J"
-			for card, _ := range cardToCount {
-				if CARD_TO_VALUE_JOKER[card] >= CARD_TO_VALUE_JOKER[bestCard] {
-					bestCard = card
-				}
-			}
-			cardToCount[bestCard] = 4
-			delete(cardToCount, "J")
-			return cardToCount
-		} else {  // J is one of the single cards, so change to the triplet
-			var tripletCard string
-			for card, count := range cardToCount {
-				if count == 3 {
-					tripletCard = card
-				}
-			}
-			cardToCount[tripletCard] = 4
-			delete(cardToCount, "J")
-			return cardToCount
-		}
+		return 6  // becomes four of a kind
 	}
 
 	if hand.isTwoPair() {
 		if cardToCount["J"] == 2 {  // J is one of the pairs
-			var otherPairCard string 
-			for card, count := range cardToCount {
-				if count == 2 && card != "J" {
-					otherPairCard = card
-					break
-				}
-			}
-			cardToCount[otherPairCard] = 4
-			delete(cardToCount, "J")
-			return cardToCount
+			return 6  // becomes four of a kind
 		} else {  // J is the single; add to best pair
-			bestPairCard := ""
-			for card, _ := range cardToCount {
-				if CARD_TO_VALUE_JOKER[card] > CARD_TO_VALUE_JOKER[bestPairCard] {
-					bestPairCard = card
-				}
-			}
-			cardToCount[bestPairCard] = 3
-			delete(cardToCount, "J")
-			return cardToCount
+			return 5  // becomes full house
 		}
 	}
 
 	if hand.isOnePair() {
-		if cardToCount["J"] == 2 {
-			bestCard := ""
-			for card, _ := range cardToCount {
-				if CARD_TO_VALUE_JOKER[card] >= CARD_TO_VALUE_JOKER[bestCard] {
-					bestCard = card
-				}
-			}
-			cardToCount[bestCard] = 3
-			delete(cardToCount, "J")
-			return cardToCount
-		} else {
-			var pairCard string
-			for card, count := range cardToCount {
-				if count == 2 {
-					pairCard = card
-					break
-				}
-			}
-			cardToCount[pairCard] = 3
-			delete(cardToCount, "J")
-			return cardToCount
-		}
+		return 4  // becomes three of a kind
 	}
 
 	if hand.isHighCard() {
-		bestCard := ""
-			for card, _ := range cardToCount {
-				if CARD_TO_VALUE_JOKER[card] >= CARD_TO_VALUE_JOKER[bestCard] {
-					bestCard = card
-				}
-			}
-			cardToCount[bestCard] = 2
-			delete(cardToCount, "J")
-			return cardToCount
+		return 2  // becomes one pair
 	}
-	return cardToCount
+
+	return 69  // should never get here
 }
 
 func (hand Hand) getCardToCount(usingJokerRule bool) map[string]int {
@@ -286,8 +209,7 @@ func (hand Hand) getCardToCount(usingJokerRule bool) map[string]int {
 			cardToCount[card] = 1
 		}
 	}
-
-	return hand.applyJokerRule(usingJokerRule, cardToCount)
+	return cardToCount
 }
 
 func (hand Hand) isHighCard() bool {
@@ -363,7 +285,11 @@ func (hand Hand) isFiveOfAKind() bool {
 	return len(hand.cardToCount) == 1
 }
 
-func (hand Hand) GetValue() int {
+func (hand Hand) GetValue(usingJokerRule bool) int {
+	hand.cardToCount = hand.getCardToCount(usingJokerRule)
+	if usingJokerRule {
+		return hand.getValueJokerRule(usingJokerRule, hand.cardToCount)
+	}
 	var isHandTypeFuncs []func() bool
 	isHandTypeFuncs = append(  // ordered from worst hand to best hand
 		isHandTypeFuncs,
